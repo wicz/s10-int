@@ -1,0 +1,21 @@
+* Subject it the title of the doc. Its base64 is used as filename. If sender 
+changes the title, a new doc is created. The system must treat replies.
+
+* The first line of the body of the email must be a command. Commands must
+follow the format :<cmd>, e.g. :new, :list. All the following content is
+treated as document content. The sender may end the body content with
+a line containing the command :end. To avoid, for instance, signatures
+and replies being part of the document
+
+* Main parts: Reader, Parser, Backend and Responder
+
+* Reader can read emails from files, stdin, imap, pop, etc.
+
+* Parser parses the message, validates it format and return the
+normalized command (and options). Exception is thrown if invalid.
+
+* Backend does the heavy lifting. It executes the command and return
+the response. Exception is thrown if command not found.
+
+* Responder is responsible for all outgoing emails to communicate 
+with end users. Exceptions are rescued and sent as well.
