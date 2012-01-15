@@ -20,5 +20,9 @@ module Wikail
       str << documents.join('\n')
       str
     end
+
+    def show options
+      File.read File.join(@dir, title_to_filename(options[:args]))
+    end
   end
 end
