@@ -3,15 +3,11 @@ module Wikail
     attr_reader :transport
 
     def initialize(transport = Wikail.config.mail_transport)
-      @transport = transport
+      @transport = transport.new
     end
 
     def respond message, body
-      @transport.deliver do
-        from Wikail.config.from_address
-        to message.from.first
-        body body
-      end
+      @transport.deliver message, body
     end
   end
 end
