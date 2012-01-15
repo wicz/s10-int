@@ -1,56 +1,44 @@
 require 'mail'
+require 'ostruct'
+
+require_relative 'wikail/reader'
+require_relative 'wikail/parser'
+require_relative 'wikail/engine'
+require_relative 'wikail/responder'
+require_relative 'wikail/mail_transport'
+
+require_relative 'wikail/readers/file_reader'
+require_relative 'wikail/readers/pop3_reader'
+
+require_relative 'wikail/engines/file_engine'
 
 module Wikail
-  
-  class Reader
-    def messages
-      [Mail.read(File.expand_path('../../data/basic_email.eml', __FILE__))]
-    end
+  extend self
+
+  def config
+    @config ||= OpenStruct.new({
+      :engine => Wikail::FileEngine,
+      :mail_transport => Wikail::MailTransport,
+      :data_dir => '/Users/vinicius/Projects/rmu/s10-int/data',
+      :username => '',
+      :password => ''
+    })
   end
-  
-  class Parser
-    def parse message
-      tokens = tokenize message
-      command, body = tokens.first, tokens.last
-      raise unless command
-      {:command => command, :body => body}
-    end
-    
-    def tokenize message
-      tokens = message.body.decoded.strip.match /(:[a-z]+)([^:end]*)/
-      tokens.to_a[1..-1]
-    end
-  end
-  
-  class Backend
-    def execute command
-      command = command.to_s.delete ':'
-      raise unless self.respond_to? command
-      self.send command
-    end
-    
-    def list
-      "Available articles:"
-    end
-  end
-  
-  class Responder
-    def deliver to, body
-      puts "Sending \"#{body}\" to #{to}"
-    end
-  end
-  
-  def self.process
-    reader = Reader.new
+
+  def process
+    reader = Reader.new(:file, '/Users/vinicius/Projects/rmu/s10-int/basic_email.eml')
+    # reader = Reader.new(:pop3, Wikail.config.mail_transport)
     parser = Parser.new
-    backend = Backend.new
+    engine = Engine.new
     responder = Responder.new
     reader.messages.each do |msg|
       options = parser.parse msg
-      response = backend.execute(options[:command])
-      responder.deliver msg.from, response
+      response = engine.execute(options[:command], options.reject! { |k,v| k == :command })
+      responder.respond msg, response
     end
     true
   end
-
 end
+
+Wikail.config
+Wikail.process

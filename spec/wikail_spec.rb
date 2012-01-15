@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Wikail do
-  it "is a module" do
-    Wikail.should be_a(Module)
+  it "runs the dirty spike" do
+    Wikail.process.should be(true)
   end
 end
