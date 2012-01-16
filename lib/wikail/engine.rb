@@ -14,7 +14,7 @@ module Wikail
     end
 
     def title_to_filename title
-      Base64.strict_encode64 title
+      Base64.strict_encode64 title.strip.gsub(/[\t\n\r\f]/, '')
     end
 
     def filename_to_title filename
