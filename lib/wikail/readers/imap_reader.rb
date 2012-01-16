@@ -1,5 +1,7 @@
 module Wikail
-  class Pop3Reader
+  class ImapReader
+    attr_reader :transport
+
     def initialize(transport)
       @transport = transport.new
     end

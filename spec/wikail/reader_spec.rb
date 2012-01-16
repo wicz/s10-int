@@ -6,12 +6,12 @@ describe Wikail::Reader do
       reader = Wikail::Reader.new(:file, __FILE__)
       reader.adapter.should be_a(Wikail::FileReader)
     end
-    
-    it "can read from a profile" do
-      reader = Wikail::Reader.new(:profile, 'gmail')
-      reader.adapter.should be_a(Wikail::ProfileReader)
+
+    it "can read from a imap" do
+      reader = Wikail::Reader.new(:imap, Wikail.config.mail_transport)
+      reader.adapter.should be_a(Wikail::ImapReader)
     end
-    
+
     it "can't read from elsewhere" do
       expect { Wikail::Reader.new(:mind, 'Vinicius') }.to raise_error NameError
     end
