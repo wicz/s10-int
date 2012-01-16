@@ -2,7 +2,7 @@ require 'fileutils'
 
 module Wikail
   class FileEngine < Engine
-    EXCLUDE_DIRS = ['.', '..']
+    EXCLUDE_DIRS = ['.', '..', '.gitkeep']
 
     def initialize
       @dir = Wikail.config.data_dir
