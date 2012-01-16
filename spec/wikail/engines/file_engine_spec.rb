@@ -15,7 +15,7 @@ describe Wikail::FileEngine do
 
   describe "#list" do
     it "list documents" do
-      engine.list.should include("Documents:\nHello RMU!")
+      engine.list.should include("Documents:\n\nHello RMU!")
     end
   end
 

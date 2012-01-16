@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module Wikail
   class FileEngine < Engine
     EXCLUDE_DIRS = ['.', '..']
@@ -13,16 +15,26 @@ module Wikail
       end
     end
 
+    def delete options
+      FileUtils.rm File.join(@dir, title_to_filename(options[:args]))
+      nil
+    end
+
+    def update options
+      create options
+    end
+
     def list(args = nil)
       files = Dir.entries(@dir) - EXCLUDE_DIRS
       documents = files.map { |file| filename_to_title(file) }
-      str = "Documents:\n"
-      str << documents.join('\n')
+      str = "Documents:\n\n"
+      str << documents.join("\n")
       str
     end
 
     def show options
       File.read File.join(@dir, title_to_filename(options[:args]))
     end
+
   end
 end
