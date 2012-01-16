@@ -6,8 +6,8 @@ module Wikail
       @transport = transport.new
     end
 
-    def respond message, body
-      @transport.deliver message, body
+    def respond to, subject, body
+      @transport.deliver to, subject, body
     end
   end
 end

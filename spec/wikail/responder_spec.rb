@@ -4,20 +4,17 @@ describe Wikail::Responder do
 
   let(:responder) { Wikail::Responder.new }
 
-  before(:each) do
-    Mail::TestMailer.deliveries.clear
-  end
+  # before(:each) do
+  #   Mail::TestMailer.deliveries.clear
+  # end
 
   it "default transport is Mail" do
-    responder.transport.should be(Mail)
+    responder.transport.should be_a(Wikail::MailTransport)
   end
 
   it "respond email" do
-    message = Mail.new { from 'rmu@localhost' }
-    responder.respond message, 'content'
-    sent = Mail::TestMailer.deliveries.first
-    sent.to.should eq(message.from)
-    sent.from.first.should eq(Wikail.config.from_address)
-    sent.body.should eq('content')
+    args = %w{ rmu@localhost subject content}
+    responder.transport.should_receive(:deliver).with(*args)
+    responder.respond *args
   end
 end
