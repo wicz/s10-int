@@ -8,7 +8,7 @@ require_relative 'wikail/responder'
 require_relative 'wikail/mail_transport'
 
 require_relative 'wikail/readers/file_reader'
-require_relative 'wikail/readers/pop3_reader'
+require_relative 'wikail/readers/imap_reader'
 
 require_relative 'wikail/engines/file_engine'
 
@@ -19,26 +19,27 @@ module Wikail
     @config ||= OpenStruct.new({
       :engine => Wikail::FileEngine,
       :mail_transport => Wikail::MailTransport,
-      :data_dir => '/Users/vinicius/Projects/rmu/s10-int/data',
+      :data_dir => File.expand_path('../../data', __FILE__),
       :username => '',
       :password => ''
     })
   end
 
-  def process
-    reader = Reader.new(:file, '/Users/vinicius/Projects/rmu/s10-int/basic_email.eml')
-    # reader = Reader.new(:pop3, Wikail.config.mail_transport)
+  def process reader
+    # reader = Reader.new(:file, '/Users/vinicius/Projects/rmu/s10-int/basic_email.eml')
     parser = Parser.new
     engine = Engine.new
     responder = Responder.new
     reader.messages.each do |msg|
-      options = parser.parse msg
-      response = engine.execute(options[:command], options.reject! { |k,v| k == :command })
-      responder.respond msg, response
+      to = msg.from.first
+      begin
+        options = parser.parse msg
+        command = options.delete :command
+        response = engine.execute(command, options)
+        responder.respond to, "[wikail] #{command}", response if response
+      rescue Exception => e
+        responder.respond to, '[wikail] error', e.message
+      end
     end
-    true
   end
 end
-
-Wikail.config
-Wikail.process
