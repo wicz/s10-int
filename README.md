@@ -1,38 +1,63 @@
-# Integration Exercise: Mail Servers
+# Wikail: Your favorite email-based Wiki
 
-_written by: Gregory Brown_
+## Supported commands
 
-While most of our attention these days gets directed towards web applications,
-there is something to be said for the universal medium of email. In this
-exercise, you'll build a simple mail server that provides an interesting service
-for its users via email.
+	:list
+	:show title
+	:create title
+	:update title
+	:delete title
 
-## Examples
+* Commands must appear in the first line of the message
+* All other content is treated as the body of the document
+* You can use the keyword :end to mark the end of the body
 
-- An archival system for sharing documents. Email an attachment to the service
-and it will be stored. Other users can query the system by email to see what
-documents are available, and request files to be sent to them from the archives
-via email.
+## Example scenario
 
-- An email based [Multi-User Dimension](http://en.wikipedia.org/wiki/MUD) which
-  allows players to navigate various themed rooms. When in a given room, the
-  user will be able to easily email other people who are in that room similar
-  to how a mailing list works. 
+#### Create a new document entitled "Contacts"
 
-## Exercise Summary
+	:create Contacts
 
-- Propose an interesting mail server idea application to implement
-  - No two students should work on the same idea
-  - Your idea should incorporate multi-user interactions in some way
-  - If you get stuck, don't be afraid to ask for help.
-- Implement your idea. You can use any mail software you'd like, but it's
-recommended to check out the mail gem, as it provides most of the
-functionality you'll need.
+	Bob 3344-5566
+	Alice 9900-1122
 
-## Submission Guidelines
+#### List the available documents
 
-If you plan to work on this exercise, you should fork this repository 
-and push code early and often during the course. The course 
-guidelines PDF explains the submission process in detail, but please 
-contact an instructor if you have any questions.
+	:list
 
+You'll receive a message like:
+
+	Documents:
+
+	Contacts
+
+#### Read a document
+
+	:show Contacts
+
+Response:
+
+	Bob 3344-5566
+	Alice 9900-1122
+
+#### Update a document
+
+	:update Contacts
+
+	Bob 3344-5566
+	Alice 9900-1122
+	David 1122-3344
+
+* Internally :update is an alias for :create
+* Be careful! The default engine (FileEngine) works on mode truncate.
+
+#### Delete a document
+
+	:delete Contacts
+
+## Consuming emails
+
+Set the environment variables `WIKAIL_USERNAME` and `WIKAIL_PASSWORD` with
+an IMAP gmail account and run `bin/wikail`
+
+	WIKAIL_USERNAME=foo@gmail.com WIKAIL_PASSWORD=awika bin/wikail
