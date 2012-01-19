@@ -25,7 +25,7 @@ module Wikail
     })
   end
 
-  def process reader
+  def process(reader)
     # reader = Reader.new(:file, '/Users/vinicius/Projects/rmu/s10-int/basic_email.eml')
     parser = Parser.new
     engine = Engine.new

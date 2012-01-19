@@ -8,19 +8,19 @@ module Wikail
       @dir = Wikail.config.data_dir
     end
 
-    def create options
+    def create(options)
       filename = File.join(@dir, title_to_filename(options[:args]))
       File.open(filename, "w") do |file|
         file.puts options[:body]
       end
     end
 
-    def delete options
+    def delete(options)
       FileUtils.rm File.join(@dir, title_to_filename(options[:args]))
       nil
     end
 
-    def update options
+    def update(options)
       create options
     end
 
@@ -32,7 +32,7 @@ module Wikail
       str
     end
 
-    def show options
+    def show(options)
       File.read File.join(@dir, title_to_filename(options[:args]))
     end
 

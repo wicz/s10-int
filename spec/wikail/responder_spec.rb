@@ -13,7 +13,7 @@ describe Wikail::Responder do
   end
 
   it "respond email" do
-    args = %w{ rmu@localhost subject content}
+    args = %w{ rmu@localhost subject content }
     responder.transport.should_receive(:deliver).with(*args)
     responder.respond *args
   end

@@ -4,7 +4,7 @@ module Wikail
       configure username, password
     end
 
-    def configure user, pass
+    def configure(user, pass)
       Mail.defaults do
         retriever_method :imap, address: "imap.gmail.com",
                                 port: 993,
@@ -26,7 +26,7 @@ module Wikail
       Mail.all :delete_after_find => true
     end
 
-    def deliver to, subject, body
+    def deliver(to, subject, body)
       Mail.deliver do
         from    Wikail.config.username
         to      to
