@@ -1,0 +1,17 @@
+module Wikail
+  module Environment
+    USERNAME = "YOUR USERNAME"
+    PASSWORD = "YOUR PASSWORD"
+
+    IMAP_SERVER = "imap.gmail.com"
+    IMAP_PORT   = 993
+
+    SMTP_SERVER = "smtp.gmail.com"
+    SMTP_PORT   = 587
+    SMTP_DOMAIN = "gmail.com"
+
+    MAIL_TRANSPORT  = Wikail::MailTransport
+    ENGINE          = Wikail::FileEngine
+    DATA_DIR        = File.expand_path('../../data', __FILE__)
+  end
+end

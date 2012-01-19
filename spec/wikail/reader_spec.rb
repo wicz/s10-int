@@ -8,7 +8,7 @@ describe Wikail::Reader do
     end
 
     it "can read from a imap" do
-      reader = Wikail::Reader.new(:imap, Wikail.config.mail_transport)
+      reader = Wikail::Reader.new(:imap, Wikail::Environment::MAIL_TRANSPORT)
       reader.adapter.should be_a(Wikail::ImapReader)
     end
 

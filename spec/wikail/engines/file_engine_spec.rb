@@ -5,12 +5,12 @@ describe Wikail::FileEngine do
   let(:engine) { Wikail::FileEngine.new }
 
   before(:each) do
-    filename = File.join Wikail.config.data_dir, 'SGVsbG8gUk1VIQ=='
+    filename = File.join Wikail::Environment::DATA_DIR, 'SGVsbG8gUk1VIQ=='
     File.open(filename, "w") { |file| file.puts "What's up doc!" }
   end
 
   after(:each) do
-    FileUtils.rm_r Dir.glob("#{Wikail.config.data_dir}/*")
+    FileUtils.rm_r Dir.glob("#{Wikail::Environment::DATA_DIR}/*")
   end
 
   describe "#list" do
@@ -22,8 +22,8 @@ describe Wikail::FileEngine do
   describe "#create" do
     it "creates a new document" do
       engine.create :args => "Untitled document", :body => "OHAI!"
-      Dir.entries(Wikail.config.data_dir).should include('VW50aXRsZWQgZG9jdW1lbnQ=')
-      File.read(File.join(Wikail.config.data_dir, 'VW50aXRsZWQgZG9jdW1lbnQ=')).should include "OHAI!"
+      Dir.entries(Wikail::Environment::DATA_DIR).should include('VW50aXRsZWQgZG9jdW1lbnQ=')
+      File.read(File.join(Wikail::Environment::DATA_DIR, 'VW50aXRsZWQgZG9jdW1lbnQ=')).should include "OHAI!"
     end
   end
 

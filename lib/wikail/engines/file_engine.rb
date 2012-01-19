@@ -5,7 +5,7 @@ module Wikail
     EXCLUDE_DIRS = ['.', '..', '.gitkeep']
 
     def initialize
-      @dir = Wikail.config.data_dir
+      @dir = Wikail::Environment::DATA_DIR
     end
 
     def create(options)

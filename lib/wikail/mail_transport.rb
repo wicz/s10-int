@@ -1,24 +1,30 @@
 module Wikail
   class MailTransport
-    def initialize(username = Wikail.config.username, password = Wikail.config.password)
-      configure username, password
+    def initialize
+      configure
     end
 
-    def configure(user, pass)
+    def configure
       Mail.defaults do
-        retriever_method :imap, address: "imap.gmail.com",
-                                port: 993,
-                                user_name: user,
-                                password: pass,
-                                enable_ssl: true
+        retriever_method(
+          :imap,
+          address:    Wikail::Environment::IMAP_SERVER,
+          port:       Wikail::Environment::IMAP_PORT,
+          user_name:  Wikail::Environment::USERNAME,
+          password:   Wikail::Environment::PASSWORD,
+          enable_ssl: true
+        )
 
-        delivery_method :smtp, address: 'smtp.gmail.com',
-                               port: 587,
-                               domain: 'gmail.com',
-                               user_name: user,
-                               password: pass,
-                               authentication: 'plain',
-                               enable_starttls_auto: true
+        delivery_method(
+          :smtp,
+          address:        Wikail::Environment::SMTP_SERVER,
+          port:           Wikail::Environment::SMTP_PORT,
+          domain:         Wikail::Environment::SMTP_DOMAIN,
+          user_name:      Wikail::Environment::USERNAME,
+          password:       Wikail::Environment::PASSWORD,
+          authentication: 'plain',
+          enable_starttls_auto: true
+        )
       end
     end
 
@@ -28,7 +34,7 @@ module Wikail
 
     def deliver(to, subject, body)
       Mail.deliver do
-        from    Wikail.config.username
+        from    Wikail::Environment::USERNAME
         to      to
         subject subject
         body    body

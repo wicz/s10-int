@@ -2,6 +2,4 @@
 
 require_relative '../lib/wikail'
 
-Wikail.config.username = ENV['WIKAIL_USERNAME']
-Wikail.config.password = ENV['WIKAIL_PASSWORD']
-Wikail.process Wikail::Reader.new(:imap, Wikail.config.mail_transport)
+Wikail.process Wikail::Reader.new(:imap, Wikail::Environment::MAIL_TRANSPORT)

@@ -11,7 +11,7 @@ describe Wikail::Engine do
 
     it "can initialize with another engine" do
       CrazyEngine = Class.new
-      engine = Wikail::Engine.new(CrazyEngine)
+      engine = Wikail::Engine.new(CrazyEngine.new)
       engine.engine.should be_a(CrazyEngine)
     end
   end

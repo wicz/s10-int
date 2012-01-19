@@ -4,8 +4,8 @@ module Wikail
   class Engine
     attr_reader :engine
 
-    def initialize(engine = Wikail.config.engine)
-      @engine = engine.new
+    def initialize(engine = Wikail::Environment::ENGINE.new)
+      @engine = engine
     end
 
     def execute(command, *args)

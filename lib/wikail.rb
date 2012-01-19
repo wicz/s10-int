@@ -12,21 +12,12 @@ require_relative 'wikail/readers/imap_reader'
 
 require_relative 'wikail/engines/file_engine'
 
+require_relative '../config/environment'
+
 module Wikail
   extend self
 
-  def config
-    @config ||= OpenStruct.new({
-      :engine => Wikail::FileEngine,
-      :mail_transport => Wikail::MailTransport,
-      :data_dir => File.expand_path('../../data', __FILE__),
-      :username => '',
-      :password => ''
-    })
-  end
-
   def process(reader)
-    # reader = Reader.new(:file, '/Users/vinicius/Projects/rmu/s10-int/basic_email.eml')
     parser = Parser.new
     engine = Engine.new
     responder = Responder.new

@@ -2,8 +2,8 @@ module Wikail
   class Responder
     attr_reader :transport
 
-    def initialize(transport = Wikail.config.mail_transport)
-      @transport = transport.new
+    def initialize(transport = Wikail::Environment::MAIL_TRANSPORT.new)
+      @transport = transport
     end
 
     def respond(to, subject, body)
