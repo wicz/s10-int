@@ -4,10 +4,6 @@ describe Wikail::Responder do
 
   let(:responder) { Wikail::Responder.new }
 
-  # before(:each) do
-  #   Mail::TestMailer.deliveries.clear
-  # end
-
   it "default transport is Mail" do
     responder.transport.should be_a(Wikail::MailTransport)
   end

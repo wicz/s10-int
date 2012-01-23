@@ -2,4 +2,5 @@
 
 require_relative '../lib/wikail'
 
-Wikail.process Wikail::Reader.new(:imap, Wikail::Environment::MAIL_TRANSPORT)
+reader = Wikail::ImapReader.new
+Wikail.process(reader.messages)

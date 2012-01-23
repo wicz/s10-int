@@ -1,11 +1,26 @@
 require 'fileutils'
+require 'base64'
 
 module Wikail
-  class FileEngine < Engine
+  class FileEngine
     EXCLUDE_DIRS = ['.', '..', '.gitkeep']
 
-    def initialize
-      @dir = Wikail::Environment::DATA_DIR
+    def initialize(dir = Wikail::Environment::DATA_DIR)
+      @dir = dir
+      FileUtils.mkdir(@dir) unless File.exists?(@dir)
+    end
+
+    def execute(command, *args)
+      command = command.to_s.delete ':'
+      send(command, *args)
+    end
+
+    def title_to_filename(title)
+      Base64.strict_encode64 title.strip.gsub(/[\t\n\r\f]/, '')
+    end
+
+    def filename_to_title(filename)
+      Base64.strict_decode64 filename
     end
 
     def create(options)

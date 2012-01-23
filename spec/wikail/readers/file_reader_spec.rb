@@ -1,15 +1,26 @@
 require 'spec_helper'
 
 describe Wikail::FileReader do
-  describe "#read_from_file" do
-    it "can read a real file" do
-      reader = Wikail::FileReader.new(File.expand_path('../../../fixtures/basic_email.eml', __FILE__))
-      reader.read.should be_a(Mail::Message)
+
+  let(:file_path) { File.expand_path('../../../fixtures/basic_email.eml', __FILE__) }
+
+  describe "#new" do
+    it "read file contents" do
+      File.should_receive :read
+      Wikail::FileReader.new(file_path)
     end
-    
-    it "can read from stdin" do
+
+    it "read from stdin" do
       ARGF.should_receive :read
-      reader = Wikail::FileReader.new('-')
+      Wikail::FileReader.new('-')
+    end
+  end
+
+  describe "#messages" do
+    it "return the message in an array" do
+      reader = Wikail::FileReader.new(file_path)
+      reader.messages.should be_a(Array)
+      reader.messages.first.should be_a(Mail::Message)
     end
   end
 end

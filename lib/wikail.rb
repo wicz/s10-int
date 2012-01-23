@@ -1,9 +1,7 @@
 require 'mail'
 require 'ostruct'
 
-require_relative 'wikail/reader'
 require_relative 'wikail/parser'
-require_relative 'wikail/engine'
 require_relative 'wikail/responder'
 require_relative 'wikail/mail_transport'
 
@@ -17,11 +15,11 @@ require_relative '../config/environment'
 module Wikail
   extend self
 
-  def process(reader)
+  def process(messages)
     parser = Parser.new
-    engine = Engine.new
+    engine = Wikail::Environment::ENGINE
     responder = Responder.new
-    reader.messages.each do |msg|
+    messages.each do |msg|
       to = msg.from.first
       begin
         options = parser.parse msg

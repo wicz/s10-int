@@ -37,4 +37,23 @@ describe Wikail::FileEngine do
       expect { engine.show :args => "File not found!" }.to raise_error(Errno::ENOENT)
     end
   end
+
+  describe "#execute" do
+    it "normalize and executes command" do
+      engine.should_receive :create
+      engine.execute(":create")
+    end
+  end
+
+  describe "#title_to_filename" do
+    it "encode base64" do
+      engine.title_to_filename('Hello RMU!').should eq('SGVsbG8gUk1VIQ==')
+    end
+  end
+
+  describe "#filename_to_title" do
+    it "decode base64" do
+      engine.filename_to_title('SGVsbG8gUk1VIQ==').should eq('Hello RMU!')
+    end
+  end
 end
