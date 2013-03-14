@@ -1,8 +1,8 @@
-source :rubygems
+source "https://rubygems.org"
 
-gem 'mail', '~> 2.3'
+gem "mail", "~> 2.3"
 
 group :test do
-  gem 'rspec', '~> 2.8'
-  gem 'guard-rspec', '~> 0.6'
+  gem "rspec", "~> 2.13"
 end
+
