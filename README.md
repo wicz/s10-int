@@ -1,5 +1,8 @@
 # Wikail: Your favorite email-based Wiki
 
+This is my implementation for the Integration Exercise for
+Medicant Unversity's Core Skills Course 2012.
+
 ## Supported commands
 
     :list
@@ -59,3 +62,4 @@ Response:
 
 Create a new `config/environment.rb` based on the example given and run
 `bin/wikail`
+
