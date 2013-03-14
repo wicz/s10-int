@@ -1,9 +1,9 @@
-require 'fileutils'
-require 'base64'
+require "fileutils"
+require "base64"
 
 module Wikail
   class FileEngine
-    EXCLUDE_DIRS = ['.', '..', '.gitkeep']
+    EXCLUDE_DIRS = [".", "..", ".gitkeep"]
 
     def initialize(dir = Wikail::Environment::DATA_DIR)
       @dir = dir
@@ -11,12 +11,12 @@ module Wikail
     end
 
     def execute(command, *args)
-      command = command.to_s.delete ':'
+      command = command.to_s.delete ":"
       send(command, *args)
     end
 
     def title_to_filename(title)
-      Base64.strict_encode64 title.strip.gsub(/[\t\n\r\f]/, '')
+      Base64.strict_encode64 title.strip.gsub(/[\t\n\r\f]/, "")
     end
 
     def filename_to_title(filename)
@@ -50,6 +50,6 @@ module Wikail
     def show(options)
       File.read File.join(@dir, title_to_filename(options[:args]))
     end
-
   end
 end
+

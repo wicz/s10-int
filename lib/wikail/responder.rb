@@ -7,7 +7,8 @@ module Wikail
     end
 
     def respond(to, subject, body)
-      @transport.deliver to, subject, body
+      @transport.deliver(to, subject, body)
     end
   end
 end
+

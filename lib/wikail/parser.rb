@@ -1,6 +1,5 @@
 module Wikail
   class Parser
-
     InvalidEmailSyntax = Class.new(StandardError)
 
     COMMAND_REGEX = "(?<command>:[a-z]+)"
@@ -20,3 +19,4 @@ module Wikail
     end
   end
 end
+

@@ -8,5 +8,5 @@ module Wikail
       [Mail.read_from_string(@source)]
     end
   end
-
 end
+

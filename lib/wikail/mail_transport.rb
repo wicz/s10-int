@@ -22,14 +22,14 @@ module Wikail
           domain:         Wikail::Environment::SMTP_DOMAIN,
           user_name:      Wikail::Environment::USERNAME,
           password:       Wikail::Environment::PASSWORD,
-          authentication: 'plain',
+          authentication: "plain",
           enable_starttls_auto: true
         )
       end
     end
 
     def read
-      Mail.all :delete_after_find => true
+      Mail.all(:delete_after_find => true)
     end
 
     def deliver(to, subject, body)
@@ -42,3 +42,4 @@ module Wikail
     end
   end
 end
+
